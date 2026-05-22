@@ -1,0 +1,491 @@
+import java.util.Scanner;
+
+class Paciente {
+    String nome;
+    String cpf;
+    int idade;
+    String telefone;
+    String convenio;
+    boolean ativo;
+
+    // Construtor simples
+    Paciente(String nome, String cpf) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.ativo = true;
+    }
+
+    // Sobrecarga de construtor
+    Paciente(String nome, String cpf, int idade, String telefone) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.idade = idade;
+        this.telefone = telefone;
+        this.ativo = true;
+    }
+
+    // Sobrecarga de construtor
+    Paciente(String nome, String cpf, int idade, String telefone, String convenio) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.idade = idade;
+        this.telefone = telefone;
+        this.convenio = convenio;
+        this.ativo = true;
+    }
+
+    void complementarCadastro(int idade, String telefone) {
+        this.idade = idade;
+        this.telefone = telefone;
+    }
+
+    void complementarCadastro(int idade, String telefone, String convenio) {
+        this.idade = idade;
+        this.telefone = telefone;
+        this.convenio = convenio;
+    }
+
+    void desativarPaciente() {
+        ativo = false;
+    }
+
+    void exibirPaciente() {
+        System.out.println("Nome: " + nome);
+        System.out.println("CPF: " + cpf);
+        System.out.println("Idade: " + idade);
+        System.out.println("Telefone: " + telefone);
+        System.out.println("Convênio: " + convenio);
+        System.out.println("Ativo: " + ativo);
+    }
+}
+
+class Profissional {
+    String nome;
+    String especialidade;
+    boolean ativo;
+    double valorConsulta;
+    String diasAtendimento;
+
+    Profissional(String nome, String especialidade) {
+        this.nome = nome;
+        this.especialidade = especialidade;
+        this.ativo = true;
+        this.valorConsulta = 150.0;
+    }
+
+    Profissional(String nome, String especialidade, double valorConsulta) {
+        this.nome = nome;
+        this.especialidade = especialidade;
+        this.valorConsulta = valorConsulta;
+        this.ativo = true;
+    }
+
+    void atualizarDados(String registro, double valorConsulta) {
+        this.valorConsulta = valorConsulta;
+    }
+
+    void exibirProfissional() {
+        System.out.println("Profissional: " + nome);
+        System.out.println("Especialidade: " + especialidade);
+        System.out.println("Valor da consulta: R$" + valorConsulta);
+    }
+}
+
+class Consulta {
+    Paciente paciente;
+    Profissional profissional;
+    String especialidade;
+    String data;
+    String horario;
+    String tipo;
+    String status;
+    double multa;
+
+    Consulta(Paciente paciente, Profissional profissional, String data, String horario) {
+        this.paciente = paciente;
+        this.profissional = profissional;
+        this.data = data;
+        this.horario = horario;
+        this.status = "Agendada";
+        this.multa = 0;
+    }
+
+    Consulta(Paciente paciente, Profissional profissional, String data, String horario, String tipo) {
+        this.paciente = paciente;
+        this.profissional = profissional;
+        this.data = data;
+        this.horario = horario;
+        this.tipo = tipo;
+        this.status = "Agendada";
+        this.multa = 0;
+    }
+
+    void agendarConsulta() {
+        if (paciente.ativo) {
+            status = "Agendada";
+            System.out.println("Consulta agendada com sucesso!");
+        } else {
+            System.out.println("Paciente inativo não pode agendar.");
+        }
+    }
+
+    void cancelarConsulta() {
+        status = "Cancelada";
+        System.out.println("Consulta cancelada.");
+    }
+
+    void cancelarConsulta(double multa) {
+        status = "Cancelada";
+        this.multa = multa;
+        System.out.println("Consulta cancelada com multa de R$" + multa);
+    }
+
+    void remarcarConsulta(String novaData) {
+        this.data = novaData;
+        System.out.println("Consulta remarcada para: " + novaData);
+    }
+
+    void remarcarConsulta(String novaData, String novoHorario) {
+        this.data = novaData;
+        this.horario = novoHorario;
+        System.out.println("Consulta remarcada para: " + novaData + " às " + novoHorario);
+    }
+
+    void exibirConsulta() {
+        System.out.println("Paciente: " + paciente.nome);
+        System.out.println("Profissional: " + profissional.nome);
+        System.out.println("Data: " + data);
+        System.out.println("Horário: " + horario);
+        System.out.println("Tipo: " + tipo);
+        System.out.println("Status: " + status);
+    }
+}
+
+class Atendimento {
+    String observacoes;
+    String diagnostico;
+    String procedimento;
+    int qtdProcedimentos;
+
+    Atendimento() {
+    }
+
+    Atendimento(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    Atendimento(String observacoes, String diagnostico) {
+        this.observacoes = observacoes;
+        this.diagnostico = diagnostico;
+    }
+
+    void registrarAtendimento(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    void registrarAtendimento(String observacoes, String diagnostico) {
+        this.observacoes = observacoes;
+        this.diagnostico = diagnostico;
+    }
+
+    void adicionarProcedimento(String procedimento) {
+        this.procedimento = procedimento;
+        qtdProcedimentos++;
+    }
+
+    void exibirResumo() {
+        System.out.println("Observações: " + observacoes);
+        System.out.println("Diagnóstico: " + diagnostico);
+        System.out.println("Procedimento: " + procedimento);
+    }
+}
+
+class Pagamento {
+    double valor;
+    String tipoPagamento;
+    int parcelas;
+    double valorParcela;
+
+    Pagamento(double valor, String tipoPagamento) {
+        this.valor = valor;
+        this.tipoPagamento = tipoPagamento;
+        this.parcelas = 1;
+    }
+
+    Pagamento(double valor, String tipoPagamento, int parcelas) {
+        this.valor = valor;
+        this.tipoPagamento = tipoPagamento;
+        this.parcelas = parcelas;
+    }
+
+    void calcularPagamento(double valorBase) {
+        this.valor = valorBase;
+    }
+
+    void calcularPagamento(double valorBase, double desconto) {
+        this.valor = valorBase - desconto;
+    }
+
+    void calcularPagamento(double valorBase, double desconto, double multa) {
+        this.valor = valorBase - desconto + multa;
+    }
+
+    void exibirPagamento() {
+        System.out.println("Valor total: R$" + valor);
+        System.out.println("Tipo de pagamento: " + tipoPagamento);
+        System.out.println("Parcelas: " + parcelas);
+    }
+}
+
+class Relatorio {
+
+    void gerarRelatorioGeral() {
+        System.out.println("Relatório geral do sistema.");
+    }
+
+    void gerarRelatorioProfissional(String nomeProfissional) {
+        System.out.println("Relatório do profissional: " + nomeProfissional);
+    }
+
+    void gerarRelatorioPeriodo(String inicio, String fim) {
+        System.out.println("Relatório do período: " + inicio + " até " + fim);
+    }
+
+    void gerarResumoFinanceiro() {
+        System.out.println("Resumo financeiro gerado.");
+    }
+}
+
+class Clinica {
+    Paciente[] pacientes = new Paciente[100];
+    Profissional[] profissionais = new Profissional[50];
+    Consulta[] consultas = new Consulta[200];
+    Pagamento[] pagamentos = new Pagamento[200];
+
+    int qtdPacientes = 0;
+    int qtdProfissionais = 0;
+    int qtdConsultas = 0;
+    int qtdPagamentos = 0;
+
+    void cadastrarPaciente(Paciente paciente) {
+        pacientes[qtdPacientes] = paciente;
+        qtdPacientes++;
+        System.out.println("Paciente cadastrado com sucesso!");
+    }
+
+    void cadastrarProfissional(Profissional profissional) {
+        profissionais[qtdProfissionais] = profissional;
+        qtdProfissionais++;
+        System.out.println("Profissional cadastrado!");
+    }
+
+    void agendarConsulta(Consulta consulta) {
+        consultas[qtdConsultas] = consulta;
+        qtdConsultas++;
+        consulta.agendarConsulta();
+    }
+
+    void registrarPagamento(Pagamento pagamento) {
+        pagamentos[qtdPagamentos] = pagamento;
+        qtdPagamentos++;
+        System.out.println("Pagamento registrado!");
+    }
+
+    Paciente buscarPaciente(String cpf) {
+        for (int i = 0; i < qtdPacientes; i++) {
+            if (pacientes[i].cpf.equals(cpf)) {
+                return pacientes[i];
+            }
+        }
+        return null;
+    }
+
+    void listarPacientes() {
+        for (int i = 0; i < qtdPacientes; i++) {
+            pacientes[i].exibirPaciente();
+            System.out.println("------------------");
+        }
+    }
+
+    void listarConsultas() {
+        for (int i = 0; i < qtdConsultas; i++) {
+            consultas[i].exibirConsulta();
+            System.out.println("------------------");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Clinica clinica = new Clinica();
+
+        int opcao;
+
+        do {
+            System.out.println("\n===== CLÍNICA VIDAPLENA =====");
+            System.out.println("1 - Cadastrar paciente");
+            System.out.println("2 - Complementar cadastro");
+            System.out.println("3 - Cadastrar profissional");
+            System.out.println("4 - Agendar consulta");
+            System.out.println("5 - Cancelar consulta");
+            System.out.println("6 - Registrar pagamento");
+            System.out.println("7 - Listar pacientes");
+            System.out.println("8 - Listar consultas");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha: ");
+
+            opcao = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcao) {
+
+                case 1:
+                    System.out.print("Nome: ");
+                    String nome = sc.nextLine();
+
+                    System.out.print("CPF: ");
+                    String cpf = sc.nextLine();
+
+                    Paciente paciente = new Paciente(nome, cpf);
+                    clinica.cadastrarPaciente(paciente);
+                    break;
+
+                case 2:
+                    System.out.print("CPF do paciente: ");
+                    String cpfBusca = sc.nextLine();
+
+                    Paciente p = clinica.buscarPaciente(cpfBusca);
+
+                    if (p != null) {
+                        System.out.print("Idade: ");
+                        int idade = sc.nextInt();
+                        sc.nextLine();
+
+                        System.out.print("Telefone: ");
+                        String telefone = sc.nextLine();
+
+                        System.out.print("Convênio: ");
+                        String convenio = sc.nextLine();
+
+                        p.complementarCadastro(idade, telefone, convenio);
+                        System.out.println("Cadastro atualizado!");
+                    } else {
+                        System.out.println("Paciente não encontrado.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Nome do profissional: ");
+                    String nomeProf = sc.nextLine();
+
+                    System.out.print("Especialidade: ");
+                    String especialidade = sc.nextLine();
+
+                    System.out.print("Valor da consulta: ");
+                    double valorConsulta = sc.nextDouble();
+
+                    Profissional profissional = new Profissional(nomeProf, especialidade, valorConsulta);
+                    clinica.cadastrarProfissional(profissional);
+                    break;
+
+                case 4:
+                    System.out.print("CPF do paciente: ");
+                    String cpfConsulta = sc.nextLine();
+
+                    Paciente pacienteConsulta = clinica.buscarPaciente(cpfConsulta);
+
+                    if (pacienteConsulta != null) {
+
+                        if (clinica.qtdProfissionais > 0) {
+
+                            Profissional profissionalConsulta = clinica.profissionais[0];
+
+                            System.out.print("Data da consulta: ");
+                            String data = sc.nextLine();
+
+                            System.out.print("Horário: ");
+                            String horario = sc.nextLine();
+
+                            System.out.print("Tipo da consulta: ");
+                            String tipo = sc.nextLine();
+
+                            Consulta consulta = new Consulta(
+                                    pacienteConsulta,
+                                    profissionalConsulta,
+                                    data,
+                                    horario,
+                                    tipo
+                            );
+
+                            clinica.agendarConsulta(consulta);
+
+                        } else {
+                            System.out.println("Nenhum profissional cadastrado.");
+                        }
+
+                    } else {
+                        System.out.println("Paciente não encontrado.");
+                    }
+                    break;
+
+                case 5:
+                    if (clinica.qtdConsultas > 0) {
+
+                        Consulta consulta = clinica.consultas[0];
+
+                        System.out.print("Aplicar multa? (s/n): ");
+                        String resposta = sc.nextLine();
+
+                        if (resposta.equalsIgnoreCase("s")) {
+                            consulta.cancelarConsulta(50.0);
+                        } else {
+                            consulta.cancelarConsulta();
+                        }
+
+                    } else {
+                        System.out.println("Nenhuma consulta cadastrada.");
+                    }
+                    break;
+
+                case 6:
+                    System.out.print("Valor do pagamento: ");
+                    double valor = sc.nextDouble();
+                    sc.nextLine();
+
+                    System.out.print("Forma de pagamento: ");
+                    String forma = sc.nextLine();
+
+                    System.out.print("Quantidade de parcelas: ");
+                    int parcelas = sc.nextInt();
+
+                    if (parcelas > 3) {
+                        System.out.println("Cartão aceita até 3 parcelas.");
+                    } else {
+                        Pagamento pagamento = new Pagamento(valor, forma, parcelas);
+                        clinica.registrarPagamento(pagamento);
+                    }
+                    break;
+
+                case 7:
+                    clinica.listarPacientes();
+                    break;
+
+                case 8:
+                    clinica.listarConsultas();
+                    break;
+
+                case 0:
+                    System.out.println("Sistema encerrado.");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.");
+            }
+
+        } while (opcao != 0);
+
+        sc.close();
+    }
+}
